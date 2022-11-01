@@ -1,7 +1,10 @@
 package bibligo
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
+	"path"
 	"strings"
 )
 
@@ -16,6 +19,18 @@ func (b Book) String() string {
 	return fmt.Sprintf("%s (%s)", b.Title, strings.Join(b.Authors, ", "))
 }
 
+func (b Book) Save() error {
+	if !pathExists("records") {
+		os.Mkdir("records", os.ModePerm)
+	}
+	fn := path.Join("records", b.makeFilename())
+	json, err := json.Marshal(b)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(fn, json, 0600)
+}
+
 func contains(slice []rune, char rune) bool {
 	for _, v := range slice {
 		if v == char {
@@ -23,6 +38,11 @@ func contains(slice []rune, char rune) bool {
 		}
 	}
 	return false
+}
+
+func pathExists(path string) bool {
+	_, err := os.Stat(path)
+	return !os.IsNotExist(err)
 }
 
 func (b Book) makeFilename() string {
@@ -33,7 +53,7 @@ func (b Book) makeFilename() string {
 			validTitle = validTitle + string(c)
 		}
 	}
-	return validTitle
+	return validTitle + ".bkr"
 }
 
 func MakeBook(title string, author string) *Book {

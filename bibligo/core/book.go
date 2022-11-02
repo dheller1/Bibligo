@@ -1,4 +1,4 @@
-package bibligo
+package core
 
 import (
 	"encoding/json"
@@ -6,6 +6,8 @@ import (
 	"os"
 	"path"
 	"strings"
+
+	"github.com/ledongthuc/pdf"
 )
 
 type Book struct {
@@ -58,4 +60,38 @@ func (b Book) makeFilename() string {
 
 func MakeBook(title string, author string) *Book {
 	return &Book{Title: title, Authors: []string{author}}
+}
+
+func MakeBookFromPdf(filename string) error {
+	pdf.DebugOn = true
+	f, reader, err := pdf.Open(filename)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	outline := reader.Outline()
+	fmt.Println("Outline:")
+	fmt.Println(outline.Title)
+	for k, v := range outline.Child {
+		fmt.Printf("%03d. Outline('%s', %d children)\n", k, v.Title, len(v.Child))
+	}
+
+	//npages := reader.NumPage()
+
+	for ipage := 1; ipage <= 3; ipage++ {
+		page := reader.Page(ipage)
+		if page.V.IsNull() {
+			continue
+		}
+		fmt.Printf("Page %d:\n", ipage)
+		var pageText string
+		textElements := page.Content().Text
+		for _, v := range textElements {
+			pageText = pageText + v.S
+		}
+		fmt.Println(pageText)
+		fmt.Println()
+	}
+	return nil
 }

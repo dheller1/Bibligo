@@ -26,6 +26,10 @@ func main() {
 	//db.InsertIntoDb()
 	//fmt.Println("OK")
 
+	isbn, _ := core.MakeISBN("ISBN 978-1-80107-931-0")
+	fmt.Println(isbn.Long())
+	fmt.Println(isbn.Short())
+
 	book := core.MakeBook("Mastering Go", "Mihalis Tsoukalos")
 	fmt.Println(book.String())
 

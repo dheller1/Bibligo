@@ -1,0 +1,30 @@
+<h1>Bibligo</h1>
+
+{{ if . }}
+<h3>Edit book</h3>
+{{ else }}
+<h3>Add new book</h3>
+{{ end }}
+
+<form action="/save" method="POST">
+	<table>
+		<tr>
+			<td valign="top"><b>Author(s):</b></td>
+			<td><input type="text" name="authors" size="80" {{ if . }}value="{{.AuthorsText}}"{{ end }}/><br>
+			<small>(separate multiple authors by comma)</small></td>
+		</tr>
+		<tr>
+			<td valign="top"><b>Title:</b></td>
+			<td><input type="text" name="title" size="80" {{ if . }}value="{{.Title}}"{{ end }} /></td>
+		</tr>
+		<tr>
+			<td valign="top">Subitle:</td>
+			<td><textarea name="subtitle" rows="2" cols="80">{{ if . }}{{.Subtitle}}{{ end }}</textarea></td>
+		</tr>
+		<tr>
+			<td valign="top">Edition:</td>
+			<td><input type="text" name="edition" size="80" {{ if . }}value="{{.Edition}}"{{ end }}/></td>
+		</tr>
+	</table>
+	<div><input type="submit" value="{{ if . }}Save{{ else }}Add{{ end }}" /></div>
+</form>

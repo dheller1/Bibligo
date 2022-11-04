@@ -11,6 +11,7 @@ import (
 )
 
 type Book struct {
+	Id       int
 	Title    string
 	Subtitle string
 	Authors  []string

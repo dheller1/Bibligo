@@ -1,0 +1,20 @@
+<h1>Bibligo</h1>
+
+<h3>Book details</h3>
+[<a href="/edit/{{.Id}}">Edit</a>]
+
+
+<h2>{{.Title}}</h2>
+{{ if .Subtitle }}<h4>{{.Subtitle}}</h4>{{ end }}
+{{ if .Edition }}<span>{{.Edition}}</span>{{ end }}
+
+</p>
+
+{{ if eq (len .Authors) 1 }}
+<span>Written by {{index .Authors 0}}</span>
+{{ else }}
+<table>
+	<tr><td>Authors:</td></tr>
+	<tr><td>{{range .Authors}}{{.}}<br>{{end}}</td></tr>
+</table>
+{{ end }}

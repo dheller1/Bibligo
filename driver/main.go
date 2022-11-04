@@ -7,6 +7,7 @@ import (
 
 	"github.com/dheller1/Bibligo/bibligo/core"
 	"github.com/dheller1/Bibligo/bibligo/db"
+	"github.com/dheller1/Bibligo/bibligo/server"
 )
 
 func main() {
@@ -38,4 +39,6 @@ func main() {
 	for i, v := range books {
 		fmt.Printf("%03d. %s (%s)\n", i+1, v.Title, strings.Join(v.Authors, ", "))
 	}
+
+	server.Start(":8080")
 }

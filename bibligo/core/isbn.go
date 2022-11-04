@@ -29,9 +29,9 @@ func (i ISBN) Short() string {
 func (i ISBN) Long() string {
 	s := string(i)
 	if i.isIsbn13() {
-		return fmt.Sprintf("%s-%s-%s-%s-%s", s[:3], string(s[3]), s[5:9], s[9:12], string(s[12]))
+		return fmt.Sprintf("%s-%s-%s-%s-%s", s[:3], string(s[3]), s[4:9], s[9:12], string(s[12]))
 	} else {
-		return fmt.Sprintf("%s-%s-%s-%s", s[:3], string(s[3]), s[5:9], string(s[9]))
+		return fmt.Sprintf("%s-%s-%s-%s", s[:3], string(s[3]), s[4:9], string(s[9]))
 	}
 }
 
